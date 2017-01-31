@@ -1,6 +1,6 @@
 {
   "name": "sarge",
-  "description": "Create, update and use search indices through search indexers",
+  "description": "Register and use custom search indexers to create, update and use search indices.",
   "version": "0.1.0",
   "homepage": "https://github.com/doowb/sarge",
   "author": "Brian Woodward (https://github.com/doowb)",

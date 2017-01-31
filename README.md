@@ -1,6 +1,6 @@
 # sarge [![NPM version](https://img.shields.io/npm/v/sarge.svg?style=flat)](https://www.npmjs.com/package/sarge) [![NPM monthly downloads](https://img.shields.io/npm/dm/sarge.svg?style=flat)](https://npmjs.org/package/sarge)  [![NPM total downloads](https://img.shields.io/npm/dt/sarge.svg?style=flat)](https://npmjs.org/package/sarge) [![Linux Build Status](https://img.shields.io/travis/doowb/sarge.svg?style=flat&label=Travis)](https://travis-ci.org/doowb/sarge)
 
-> Create, update and use search indices through search indexers
+> Register and use custom search indexers to create, update and use search indices.
 
 ## Install
 
