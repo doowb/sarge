@@ -32,6 +32,28 @@
   },
   "devDependencies": {
     "async-each": "^1.0.1",
+    "gulp-format-md": "^0.1.11",
     "mocha": "^3.2.0"
+  },
+  "verb": {
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "lint": {
+      "reflinks": true
+    },
+    "related": {
+      "list": []
+    },
+    "reflinks": [
+      "assemble",
+      "verb",
+      "verb-generate-readme"
+    ]
   }
 }
