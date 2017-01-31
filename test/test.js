@@ -3,24 +3,24 @@
 require('mocha');
 var each = require('async-each');
 var assert = require('assert');
-var Search = require('../');
-var search;
+var Sarge = require('../');
+var sarge;
 
-describe('search-indexer', function() {
+describe('sarge', function() {
   beforeEach(function() {
-    search = new Search();
+    sarge = new Sarge();
   });
 
   it('should export a function', function() {
-    assert.equal(typeof Search, 'function');
+    assert.equal(typeof Sarge, 'function');
   });
 
   it('should create a new instance', function() {
-    assert(search);
-    assert.equal(typeof search, 'object');
-    assert.equal(typeof search.indexer, 'function');
-    assert.equal(typeof search.collect, 'function');
-    assert.equal(typeof search.index, 'function');
+    assert(sarge);
+    assert.equal(typeof sarge, 'object');
+    assert.equal(typeof sarge.indexer, 'function');
+    assert.equal(typeof sarge.collect, 'function');
+    assert.equal(typeof sarge.index, 'function');
   });
 
   it('should register an indexer', function() {
@@ -29,8 +29,8 @@ describe('search-indexer', function() {
       index: function() {}
     };
 
-    search.indexer('foo', foo);
-    assert.deepEqual(search.indexers.foo, foo);
+    sarge.indexer('foo', foo);
+    assert.deepEqual(sarge.indexers.foo, foo);
   });
 
   it('should get a registered indexer', function() {
@@ -39,13 +39,13 @@ describe('search-indexer', function() {
       index: function() {}
     };
 
-    search.indexer('foo', foo);
-    assert.deepEqual(search.indexer('foo'), foo);
+    sarge.indexer('foo', foo);
+    assert.deepEqual(sarge.indexer('foo'), foo);
   });
 
   it('should throw an error if getting an unregistered indexer', function(cb) {
     try {
-      search.indexer('foo');
+      sarge.indexer('foo');
       cb(new Error('expected an error'));
     } catch (err) {
       assert.equal(err.message, 'Unable to find indexer "foo"');
@@ -55,18 +55,18 @@ describe('search-indexer', function() {
 
   describe('collect', function() {
     it('should return a stream', function() {
-      var stream = search.collect();
+      var stream = sarge.collect();
       assert(stream, 'expected a stream to be returned');
       assert.equal(typeof stream.on, 'function');
       assert.equal(typeof stream.pipe, 'function');
     });
 
     it('should collect file objects and add them to the files object', function(cb) {
-      var stream = search.collect();
+      var stream = sarge.collect();
       stream.once('error', cb);
       stream.on('data', function() {});
       stream.on('end', function() {
-        assert.deepEqual(search.files, {
+        assert.deepEqual(sarge.files, {
           foo: {key: 'foo'},
           bar: {key: 'bar'},
           baz: {key: 'baz'}
@@ -96,12 +96,12 @@ describe('search-indexer', function() {
           next();
         }
       };
-      search.indexer('foo', foo);
-      var stream = search.collect({indexer: 'foo'});
+      sarge.indexer('foo', foo);
+      var stream = sarge.collect({indexer: 'foo'});
       stream.once('error', cb);
       stream.on('data', function() {});
       stream.on('end', function() {
-        search.index({indexer: 'foo'}, cb);
+        sarge.index({indexer: 'foo'}, cb);
       });
 
       stream.write({key: 'foo'});
@@ -136,17 +136,17 @@ describe('search-indexer', function() {
         }
       };
 
-      search.indexer('foo', foo);
-      search.indexer('bar', bar);
+      sarge.indexer('foo', foo);
+      sarge.indexer('bar', bar);
 
       // use default indexer to collect files
-      var stream = search.collect();
+      var stream = sarge.collect();
       stream.once('error', cb);
       stream.on('data', function() {});
       stream.on('end', function() {
         // use foo and bar indexers to index results
         each(['foo', 'bar'], function(name, next) {
-          search.index({indexer: name}, next);
+          sarge.index({indexer: name}, next);
         }, function(err) {
           if (err) return cb(err);
           assert.equal(count, 2);

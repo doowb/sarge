@@ -5,21 +5,21 @@ var utils = require('./lib/utils');
 var indexer = require('./lib/indexer');
 
 /**
- * Search object used to register [indexers](#indexers) and execute the [collect](#collect) and [index](#index)
+ * Sarge object used to register [indexers](#indexers) and execute the [collect](#collect) and [index](#index)
  * methods on indexers.
  *
  * ```js
- * var search = new Search();
+ * var sarge = new Sarge();
  * ```
  * @param {Object} `options` Options to control defaults.
  * @param {String} `options.indexer` Set a default indexer to use when one isn't specified in [.collect](#collect) or [.index](#index). Defaults to "default".
- * @returns {Object} Instance of Search
+ * @returns {Object} Instance of Sarge
  * @api public
  */
 
-function Search(options) {
-  if (!(this instanceof Search)) {
-    return new Search(options);
+function Sarge(options) {
+  if (!(this instanceof Sarge)) {
+    return new Sarge(options);
   }
   utils.define(this, 'indexers', {});
   utils.define(this, 'options', utils.extend({}, options));
@@ -32,17 +32,17 @@ function Search(options) {
  *
  * ```js
  * // set
- * search.indexer('foo', foo);
+ * sarge.indexer('foo', foo);
  * // get
- * var foo = search.indexer('foo');
+ * var foo = sarge.indexer('foo');
  * ```
  * @param  {String} `name` Name of indexer to get or set.
  * @param  {Object} `indexer` Instance of an indexer. See [indexers](#indexers) for more information.
- * @return {Object} Search instance when setting, indexer instance when getting.
+ * @return {Object} Sarge instance when setting, indexer instance when getting.
  * @api public
  */
 
-Search.prototype.indexer = function(name, indexer) {
+Sarge.prototype.indexer = function(name, indexer) {
   if (typeof name !== 'string') {
     throw new TypeError('expected "name" to be a string');
   }
@@ -66,16 +66,16 @@ Search.prototype.indexer = function(name, indexer) {
  * ```js
  * app.src('*.md')
  *   // use default set on instance or "default" indexer
- *   .pipe(search.collect())
+ *   .pipe(sarge.collect())
  *   // or specify a registred indexer to use
- *   .pipe(search.collect({indexer: 'foo'}));
+ *   .pipe(sarge.collect({indexer: 'foo'}));
  * ```
  * @param  {Object} `options` Options used to specify the indexer to use.
  * @return {Stream} Through stream that's used to collect files to index.
  * @api public
  */
 
-Search.prototype.collect = function(options) {
+Sarge.prototype.collect = function(options) {
   var self = this;
   var opts = utils.extend({indexer: 'default'}, this.options, options);
   var indexer = this.indexer(opts.indexer);
@@ -98,13 +98,13 @@ Search.prototype.collect = function(options) {
  *
  * ```js
  * // use default indexer specified when adding the plugin
- * search.index(function(err) {
+ * sarge.index(function(err) {
  *   if (err) return console.error(err);
  *   console.log('indexing finished');
  * });
  *
  * // use registered indexer
- * search.index({indexer: 'foo'}, function(err) {
+ * sarge.index({indexer: 'foo'}, function(err) {
  *   if (err) return console.error(err);
  *   console.log('indexing finished');
  * });
@@ -114,7 +114,7 @@ Search.prototype.collect = function(options) {
  * @api public
  */
 
-Search.prototype.index = function(options, cb) {
+Sarge.prototype.index = function(options, cb) {
   if (typeof options === 'function') {
     cb = options;
     options = {};
@@ -130,7 +130,7 @@ Search.prototype.index = function(options, cb) {
 };
 
 /**
- * Exposes `Search`
+ * Exposes `Sarge`
  */
 
-module.exports = Search;
+module.exports = Sarge;
