@@ -18,20 +18,20 @@ var Search = require('sarge');
 
 ## API
 
-### [Search](index.js#L20)
+### [Sarge](index.js#L20)
 
-Search object used to register [indexers](#indexers) and execute the [collect](#collect) and [index](#index) methods on indexers.
+Sarge object used to register [indexers](#indexers) and execute the [collect](#collect) and [index](#index) methods on indexers.
 
 **Params**
 
 * `options` **{Object}**: Options to control defaults.
 * `options.indexer` **{String}**: Set a default indexer to use when one isn't specified in [.collect](#collect) or [.index](#index). Defaults to "default".
-* `returns` **{Object}**: Instance of Search
+* `returns` **{Object}**: Instance of Sarge
 
 **Example**
 
 ```js
-var search = new Search();
+var sarge = new Sarge();
 ```
 
 ### [.indexer](index.js#L45)
@@ -42,15 +42,15 @@ Get or set an indexer by name. This throws an error if only name is passed and t
 
 * `name` **{String}**: Name of indexer to get or set.
 * `indexer` **{Object}**: Instance of an indexer. See [indexers](#indexers) for more information.
-* `returns` **{Object}**: Search instance when setting, indexer instance when getting.
+* `returns` **{Object}**: Sarge instance when setting, indexer instance when getting.
 
 **Example**
 
 ```js
 // set
-search.indexer('foo', foo);
+sarge.indexer('foo', foo);
 // get
-var foo = search.indexer('foo');
+var foo = sarge.indexer('foo');
 ```
 
 ### [.collect](index.js#L78)
@@ -67,9 +67,9 @@ Creates a through stream that will execute `.collect` method on specified indexe
 ```js
 app.src('*.md')
   // use default set on instance or "default" indexer
-  .pipe(search.collect())
+  .pipe(sarge.collect())
   // or specify a registred indexer to use
-  .pipe(search.collect({indexer: 'foo'}));
+  .pipe(sarge.collect({indexer: 'foo'}));
 ```
 
 ### [.index](index.js#L117)
@@ -85,13 +85,13 @@ Executes the `.index` method on the specified indexer passing the collected file
 
 ```js
 // use default indexer specified when adding the plugin
-search.index(function(err) {
+sarge.index(function(err) {
   if (err) return console.error(err);
   console.log('indexing finished');
 });
 
 // use registered indexer
-search.index({indexer: 'foo'}, function(err) {
+sarge.index({indexer: 'foo'}, function(err) {
   if (err) return console.error(err);
   console.log('indexing finished');
 });
