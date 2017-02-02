@@ -11,7 +11,7 @@
   "license": "MIT",
   "files": [
     "index.js",
-    "LICENSE"
+    "lib"
   ],
   "main": "index.js",
   "engines": {
@@ -20,15 +20,6 @@
   "scripts": {
     "test": "mocha"
   },
-  "keywords": [
-    "index",
-    "algolia",
-    "indexer",
-    "lunr",
-    "search",
-    "search-index",
-    "search-indexer"
-  ],
   "dependencies": {
     "define-property": "^0.2.5",
     "extend-shallow": "^2.0.1",
@@ -47,6 +38,15 @@
     "write": "^0.3.2",
     "yargs-parser": "^4.2.1"
   },
+  "keywords": [
+    "algolia",
+    "index",
+    "indexer",
+    "lunr",
+    "search",
+    "search-index",
+    "search-indexer"
+  ],
   "verb": {
     "toc": false,
     "layout": "default",
