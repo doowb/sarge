@@ -21,8 +21,13 @@
     "test": "mocha"
   },
   "keywords": [
+    "index",
+    "algolia",
     "indexer",
-    "search"
+    "lunr",
+    "search",
+    "search-index",
+    "search-indexer"
   ],
   "dependencies": {
     "define-property": "^0.2.5",
@@ -55,7 +60,10 @@
       "reflinks": true
     },
     "related": {
-      "list": []
+      "list": [
+        "base-search",
+        "search-indexer-algolia"
+      ]
     },
     "reflinks": [
       "assemble",

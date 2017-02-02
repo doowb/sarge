@@ -149,6 +149,11 @@ indexer.index = function(files, options, cb) {
 
 ## About
 
+### Related projects
+
+* [base-search](https://www.npmjs.com/package/base-search): Base plugin that adds methods for creating, updating and using search indexes. | [homepage](https://github.com/node-base/base-search "Base plugin that adds methods for creating, updating and using search indexes.")
+* [search-indexer-algolia](https://www.npmjs.com/package/search-indexer-algolia): base-search indexer to enable collecting and adding records to an algolia search index | [homepage](https://github.com/doowb/search-indexer-algolia "base-search indexer to enable collecting and adding records to an algolia search index")
+
 ### Contributing
 
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](../../issues/new).
