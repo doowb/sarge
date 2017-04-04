@@ -28,16 +28,16 @@
     "through2": "^2.0.3"
   },
   "devDependencies": {
-    "algoliasearch": "^3.20.4",
-    "assemble": "^0.18.1",
+    "algoliasearch": "^3.22.1",
+    "assemble": "^0.23.0",
     "async-each": "^1.0.1",
     "cheerio": "^0.22.0",
     "fs-exists-sync": "^0.1.0",
-    "gulp-format-md": "^0.1.11",
-    "lunr": "^0.7.2",
+    "gulp-format-md": "^0.1.12",
+    "lunr": "^1.0.0",
     "mocha": "^3.2.0",
-    "write": "^0.3.2",
-    "yargs-parser": "^4.2.1"
+    "write": "^0.3.3",
+    "yargs-parser": "^5.0.0"
   },
   "keywords": [
     "algolia",
