@@ -51,7 +51,7 @@ Sarge.prototype.indexer = function(name, indexer) {
     if (this.indexers[name]) {
       return this.indexers[name];
     }
-    throw new Error(`Unable to find indexer "${name}"`);
+    throw new Error('Unable to find indexer "' + name + '"');
   }
 
   this.indexers[name] = indexer;
