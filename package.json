@@ -23,6 +23,7 @@
   "dependencies": {
     "define-property": "^0.2.5",
     "extend-shallow": "^2.0.1",
+    "for-own": "^1.0.0",
     "lazy-cache": "^2.0.2",
     "through2": "^2.0.3"
   },

@@ -13,6 +13,7 @@ var indexer = require('./lib/indexer');
  * ```
  * @param {Object} `options` Options to control defaults.
  * @param {String} `options.indexer` Set a default indexer to use when one isn't specified in [.collect](#collect) or [.index](#index). Defaults to "default".
+ * @param {Object} `options.indexers` Optionally set an object of indexers when creating the new instance.
  * @returns {Object} Instance of Sarge
  * @api public
  */
@@ -21,10 +22,17 @@ function Sarge(options) {
   if (!(this instanceof Sarge)) {
     return new Sarge(options);
   }
-  utils.define(this, 'indexers', {});
+
   utils.define(this, 'options', utils.extend({}, options));
+  utils.define(this, 'indexers', {});
   utils.define(this, 'files', {});
   this.indexer('default', indexer());
+
+  if (this.options.indexers) {
+    utils.own(this.options.indexers, function(val, key) {
+      this.indexer(key, val);
+    }, this);
+  }
 }
 
 /**
@@ -109,8 +117,10 @@ Sarge.prototype.collect = function(options) {
  *   console.log('indexing finished');
  * });
  * ```
- * @param  {Object} `options` Options to specify the indexer to use and to pass into the `.index` method.
- * @param  {Function} `cb` Callback function passed into the indexer's `.index` method to specify when indexing is finished.
+ * @param {Object} `options` Options to specify the indexer to use and to pass into the `.index` method.
+ * @param {String} `options.indexer` Indexer to use. Defaults to 'default'
+ * @param {Boolean} `options.clear` Optionally clear the stored `files` object. This is useful for incremental indexing in a continuous stream.
+ * @param {Function} `cb` Callback function passed into the indexer's `.index` method to specify when indexing is finished.
  * @api public
  */
 
@@ -124,9 +134,14 @@ Sarge.prototype.index = function(options, cb) {
     throw new TypeError('expected "cb" to be a function');
   }
 
-  var opts = utils.extend({indexer: 'default'}, this.options, options);
+  var opts = utils.extend({indexer: 'default', clear: false}, this.options, options);
+  var files = utils.extend({}, this.files);
+  if (opts.clear === true) {
+    this.files = {};
+  }
+
   var indexer = this.indexer(opts.indexer);
-  indexer.index(this.files, opts, cb);
+  indexer.index(files, opts, cb);
 };
 
 /**
