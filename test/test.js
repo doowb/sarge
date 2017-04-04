@@ -159,5 +159,37 @@ describe('sarge', function() {
       stream.write({key: 'baz'});
       stream.end();
     });
+
+    it('should clear files after calling index', function(cb) {
+      var foo = {
+        collect: function(file, next) {
+          next(null, file);
+        },
+        index: function(files, options, next) {
+          assert.deepEqual(files, {
+            foo: {key: 'foo'},
+            bar: {key: 'bar'},
+            baz: {key: 'baz'}
+          });
+          next();
+        }
+      };
+      sarge.indexer('foo', foo);
+      var stream = sarge.collect({indexer: 'foo'});
+      stream.once('error', cb);
+      stream.on('data', function() {});
+      stream.on('end', function() {
+        sarge.index({indexer: 'foo', clear: true}, function(err) {
+          if (err) return cb();
+          assert.deepEqual(sarge.files, {});
+          cb();
+        });
+      });
+
+      stream.write({key: 'foo'});
+      stream.write({key: 'bar'});
+      stream.write({key: 'baz'});
+      stream.end();
+    });
   });
 });
